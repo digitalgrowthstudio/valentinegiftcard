@@ -13,7 +13,8 @@
   --bg2:#2b0038;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+
 body{
   height:100vh;
   display:flex;
@@ -27,15 +28,11 @@ body{
   color:white;
 }
 
-/* Floating hearts background */
-.hearts{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-}
+/* Floating hearts */
+.hearts{position:fixed;inset:0;pointer-events:none;}
 .heart{
   position:absolute;
-  width:20px;height:20px;
+  width:18px;height:18px;
   background:linear-gradient(135deg,var(--pink),var(--pink2));
   transform:rotate(45deg);
   animation:float linear infinite;
@@ -43,25 +40,24 @@ body{
 .heart::before,.heart::after{
   content:"";
   position:absolute;
-  width:20px;height:20px;
+  width:18px;height:18px;
   background:inherit;
   border-radius:50%;
 }
-.heart::before{left:-10px}
-.heart::after{top:-10px}
+.heart::before{left:-9px}
+.heart::after{top:-9px}
 @keyframes float{
   from{transform:translateY(110vh) rotate(45deg)}
   to{transform:translateY(-20vh) rotate(45deg)}
 }
 
 /* Card */
-.wrap{perspective:1400px}
+.wrap{perspective:1200px}
 .card{
-  width:320px;
-  height:420px;
-  position:relative;
+  width:320px;height:420px;
   transform-style:preserve-3d;
   transition:1s;
+  position:relative;
 }
 .card.open{transform:rotateY(180deg)}
 
@@ -69,16 +65,14 @@ body{
   position:absolute;
   inset:0;
   background:rgba(255,255,255,.08);
-  backdrop-filter:blur(14px);
+  backdrop-filter:blur(12px);
   border-radius:18px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:16px;
-  padding:20px;
+  gap:18px;
 }
-
 .front{backface-visibility:hidden}
 .inside{
   transform:rotateY(180deg);
@@ -95,11 +89,10 @@ button{
 }
 .openBtn{background:linear-gradient(135deg,var(--pink),var(--pink2))}
 .yes{background:#00c97c}
-.no{background:#ff4040; position:absolute}
+.no{background:#ff4040;position:absolute}
 
 .noArea{
-  width:200px;
-  height:120px;
+  width:200px;height:120px;
   position:relative;
   display:flex;
   align-items:center;
@@ -114,27 +107,30 @@ button{
 }
 .noMsg.show{opacity:1}
 
-/* FINAL SCREEN */
+/* Final Screen */
 .final{
   position:fixed;
   inset:0;
   display:none;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  flex-direction:column;
   text-align:center;
-  z-index:5;
+  gap:15px;
 }
-
 .big{
   font-size:40px;
   font-weight:900;
-  margin-top:10px;
 }
 </style>
 </head>
 
 <body>
+
+<!-- Audio (Exact filename) -->
+<audio id="bgMusic">
+  <source src="ScreenRecording_02-05-2026 16-14-08_1.mp3" type="audio/mpeg">
+</audio>
 
 <div class="hearts" id="hearts"></div>
 
@@ -149,29 +145,26 @@ button{
 <div class="panel inside">
 <h2>Will you be my Valentine?</h2>
 
-<div>
 <button class="yes" id="yesBtn">YES</button>
 
 <div class="noArea" id="noArea">
 <button class="no" id="noBtn">NO</button>
 </div>
-</div>
 
 <div class="noMsg" id="noMsg"></div>
-
 </div>
+
 </div>
 </div>
 
 <div class="final" id="final">
 <h2>I knew it ❤️</h2>
-
 <div class="big">HAPPY VALENTINE’S DAY</div>
 <div class="big">I LOVE YOU</div>
 </div>
 
 <script>
-/* Hearts generator */
+/* Floating hearts */
 const hearts=document.getElementById("hearts");
 for(let i=0;i<40;i++){
  let h=document.createElement("div");
@@ -181,16 +174,34 @@ for(let i=0;i<40;i++){
  hearts.appendChild(h);
 }
 
-/* Card flip */
+/* Elements */
+const card=document.getElementById("card");
+const openBtn=document.getElementById("openBtn");
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const noArea=document.getElementById("noArea");
+const noMsg=document.getElementById("noMsg");
+const final=document.getElementById("final");
+const music=document.getElementById("bgMusic");
+
+/* Play sound */
+function playSound(){
+  try{
+    music.currentTime=0;
+    music.play();
+  }catch(e){}
+}
+
+/* Open card */
 openBtn.onclick=()=>card.classList.add("open");
 
-/* NO runaway */
+/* NO button movement */
 const msgs=[
 "Think again 😏",
 "Are you sure?",
-"One more chance 💘",
 "Wrong button 😄",
-"Say YES please ❤️"
+"Say YES ❤️",
+"Try again 😜"
 ];
 let count=0;
 
@@ -202,15 +213,17 @@ function move(){
  noMsg.textContent=msgs[count%msgs.length];
  noMsg.classList.add("show");
  count++;
+ playSound();
 }
 
 noBtn.onclick=e=>{e.preventDefault();move();}
 noBtn.onmouseenter=move;
 
-/* YES final */
+/* YES */
 yesBtn.onclick=()=>{
+ playSound();
  final.style.display="flex";
-}
+};
 </script>
 
 </body>

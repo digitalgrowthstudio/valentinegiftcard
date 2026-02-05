@@ -28,7 +28,7 @@ body{
  color:white;
 }
 
-/* Floating Hearts */
+/* Floating hearts */
 .hearts{position:fixed;inset:0;pointer-events:none;}
 .heart{
  position:absolute;
@@ -78,13 +78,12 @@ body{
 .front{backface-visibility:hidden}
 .inside{transform:rotateY(180deg);backface-visibility:hidden}
 
-/* Buttons */
 button{
  padding:15px 22px;
  border:none;
  border-radius:14px;
  font-weight:900;
- font-size:20px;
+ font-size:22px;
  cursor:pointer;
  color:white;
 }
@@ -100,6 +99,13 @@ button{
  justify-content:center;
 }
 
+/* Message */
+.noMsg{
+ font-size:24px;
+ font-weight:800;
+ min-height:28px;
+}
+
 /* Final Screen */
 .final{
  position:fixed;
@@ -112,36 +118,20 @@ button{
  gap:26px;
 }
 
-/* BIG TEXTS */
-.big1{
- font-size:64px;
- font-weight:900;
- animation:pulse 1.8s infinite;
-}
-
-.big2{
- font-size:58px;
- font-weight:900;
- animation:glow 2s infinite alternate;
-}
-
-.big3{
- font-size:58px;
- font-weight:900;
- animation:floatText 3s infinite ease-in-out;
-}
+/* Big text animations */
+.big1{font-size:64px;font-weight:900;animation:pulse 1.8s infinite;}
+.big2{font-size:58px;font-weight:900;animation:glow 2s infinite alternate;}
+.big3{font-size:58px;font-weight:900;animation:floatText 3s infinite ease-in-out;}
 
 @keyframes pulse{
  0%{transform:scale(1)}
  50%{transform:scale(1.08)}
  100%{transform:scale(1)}
 }
-
 @keyframes glow{
  from{text-shadow:0 0 10px #fff,0 0 25px #ff3b93}
  to{text-shadow:0 0 30px #ff86c2,0 0 60px #ff3b93}
 }
-
 @keyframes floatText{
  0%,100%{transform:translateY(0)}
  50%{transform:translateY(-12px)}
@@ -175,11 +165,12 @@ button{
 <button class="no" id="noBtn">NO 😜</button>
 </div>
 
+<div class="noMsg" id="noMsg"></div>
+
 </div>
 </div>
 </div>
 
-<!-- FINAL -->
 <div class="final" id="final">
 <div class="big1">I KNEW IT ❤️🥳</div>
 <div class="big2">HAPPY VALENTINE'S DAY 💐💞</div>
@@ -203,23 +194,36 @@ const openBtn=document.getElementById("openBtn");
 const yesBtn=document.getElementById("yesBtn");
 const noBtn=document.getElementById("noBtn");
 const noArea=document.getElementById("noArea");
+const noMsg=document.getElementById("noMsg");
 const final=document.getElementById("final");
 const wrap=document.getElementById("wrap");
+
+/* Messages */
+const messages=[
+"One more chance 😏",
+"Think again 😉",
+"Don't break my heart 💔",
+"Are you sure? 😜",
+"Try YES 😍"
+];
+let i=0;
 
 /* Open */
 openBtn.onclick=()=>card.classList.add("open");
 
-/* NO RUN */
+/* NO movement + text */
 function move(){
  let rect=noArea.getBoundingClientRect();
  let x=Math.random()*(rect.width-60);
  let y=Math.random()*(rect.height-30);
  noBtn.style.transform=`translate(${x}px,${y}px)`;
+ noMsg.textContent=messages[i % messages.length];
+ i++;
 }
 noBtn.onclick=e=>{e.preventDefault();move();}
 noBtn.onmouseenter=move;
 
-/* YES FINAL */
+/* YES */
 yesBtn.onclick=()=>{
  wrap.style.display="none";
  final.style.display="flex";

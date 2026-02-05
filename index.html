@@ -7,166 +7,189 @@
 
 <style>
 :root{
-  --pink:#ff3b93;
-  --pink2:#ff86c2;
-  --bg1:#120018;
-  --bg2:#2b0038;
+ --pink:#ff3b93;
+ --pink2:#ff86c2;
+ --bg1:#120018;
+ --bg2:#2b0038;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 
 body{
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:
-    radial-gradient(circle at 20% 20%, #ff4fa7, transparent 40%),
-    radial-gradient(circle at 80% 30%, #ff9ad5, transparent 35%),
-    linear-gradient(135deg,var(--bg1),var(--bg2));
-  overflow:hidden;
-  color:white;
+ height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:
+ radial-gradient(circle at 20% 20%, #ff4fa7, transparent 40%),
+ radial-gradient(circle at 80% 30%, #ff9ad5, transparent 35%),
+ linear-gradient(135deg,var(--bg1),var(--bg2));
+ overflow:hidden;
+ color:white;
 }
 
-/* Floating hearts */
+/* Floating Hearts */
 .hearts{position:fixed;inset:0;pointer-events:none;}
 .heart{
-  position:absolute;
-  width:18px;height:18px;
-  background:linear-gradient(135deg,var(--pink),var(--pink2));
-  transform:rotate(45deg);
-  animation:float linear infinite;
+ position:absolute;
+ width:22px;height:22px;
+ background:linear-gradient(135deg,var(--pink),var(--pink2));
+ transform:rotate(45deg);
+ animation:float linear infinite;
 }
 .heart::before,.heart::after{
-  content:"";
-  position:absolute;
-  width:18px;height:18px;
-  background:inherit;
-  border-radius:50%;
+ content:"";
+ position:absolute;
+ width:22px;height:22px;
+ background:inherit;
+ border-radius:50%;
 }
-.heart::before{left:-9px}
-.heart::after{top:-9px}
+.heart::before{left:-11px}
+.heart::after{top:-11px}
+
 @keyframes float{
-  from{transform:translateY(110vh) rotate(45deg)}
-  to{transform:translateY(-20vh) rotate(45deg)}
+ from{transform:translateY(110vh) rotate(45deg)}
+ to{transform:translateY(-20vh) rotate(45deg)}
 }
 
 /* Card */
 .wrap{perspective:1200px}
 .card{
-  width:320px;height:420px;
-  transform-style:preserve-3d;
-  transition:1s;
-  position:relative;
+ width:360px;height:460px;
+ transform-style:preserve-3d;
+ transition:1s;
 }
 .card.open{transform:rotateY(180deg)}
 
 .panel{
-  position:absolute;
-  inset:0;
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(12px);
-  border-radius:18px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:18px;
-}
-.front{backface-visibility:hidden}
-.inside{
-  transform:rotateY(180deg);
-  backface-visibility:hidden;
+ position:absolute;
+ inset:0;
+ background:rgba(255,255,255,.08);
+ backdrop-filter:blur(12px);
+ border-radius:20px;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:22px;
+ text-align:center;
 }
 
+.front{backface-visibility:hidden}
+.inside{transform:rotateY(180deg);backface-visibility:hidden}
+
+/* Buttons */
 button{
-  padding:12px 18px;
-  border:none;
-  border-radius:12px;
-  font-weight:800;
-  cursor:pointer;
-  color:white;
+ padding:15px 22px;
+ border:none;
+ border-radius:14px;
+ font-weight:900;
+ font-size:20px;
+ cursor:pointer;
+ color:white;
 }
 .openBtn{background:linear-gradient(135deg,var(--pink),var(--pink2))}
 .yes{background:#00c97c}
 .no{background:#ff4040;position:absolute}
 
 .noArea{
-  width:200px;height:120px;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+ width:220px;height:140px;
+ position:relative;
+ display:flex;
+ align-items:center;
+ justify-content:center;
 }
-
-.noMsg{
-  height:20px;
-  font-weight:700;
-  opacity:0;
-  transition:.3s;
-}
-.noMsg.show{opacity:1}
 
 /* Final Screen */
 .final{
-  position:fixed;
-  inset:0;
-  display:none;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  gap:15px;
+ position:fixed;
+ inset:0;
+ display:none;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ gap:26px;
 }
-.big{
-  font-size:40px;
-  font-weight:900;
+
+/* BIG TEXTS */
+.big1{
+ font-size:64px;
+ font-weight:900;
+ animation:pulse 1.8s infinite;
+}
+
+.big2{
+ font-size:58px;
+ font-weight:900;
+ animation:glow 2s infinite alternate;
+}
+
+.big3{
+ font-size:58px;
+ font-weight:900;
+ animation:floatText 3s infinite ease-in-out;
+}
+
+@keyframes pulse{
+ 0%{transform:scale(1)}
+ 50%{transform:scale(1.08)}
+ 100%{transform:scale(1)}
+}
+
+@keyframes glow{
+ from{text-shadow:0 0 10px #fff,0 0 25px #ff3b93}
+ to{text-shadow:0 0 30px #ff86c2,0 0 60px #ff3b93}
+}
+
+@keyframes floatText{
+ 0%,100%{transform:translateY(0)}
+ 50%{transform:translateY(-12px)}
+}
+
+.question{
+ font-size:30px;
+ font-weight:900;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Audio (Exact filename) -->
-<audio id="bgMusic">
-  <source src="ScreenRecording_02-05-2026 16-14-08_1.mp3" type="audio/mpeg">
-</audio>
-
 <div class="hearts" id="hearts"></div>
 
-<div class="wrap">
+<div class="wrap" id="wrap">
 <div class="card" id="card">
 
 <div class="panel front">
-<h2>Valentine Card 💌</h2>
-<button class="openBtn" id="openBtn">Open</button>
+<h2 class="question">💘 Open Your Valentine Card 💘</h2>
+<button class="openBtn" id="openBtn">OPEN ❤️</button>
 </div>
 
 <div class="panel inside">
-<h2>Will you be my Valentine?</h2>
+<h2 class="question">Will you be my Valentine? 💖🥰</h2>
 
-<button class="yes" id="yesBtn">YES</button>
+<button class="yes" id="yesBtn">YES 😍</button>
 
 <div class="noArea" id="noArea">
-<button class="no" id="noBtn">NO</button>
-</div>
-
-<div class="noMsg" id="noMsg"></div>
+<button class="no" id="noBtn">NO 😜</button>
 </div>
 
 </div>
 </div>
+</div>
 
+<!-- FINAL -->
 <div class="final" id="final">
-<h2>I knew it ❤️</h2>
-<div class="big">HAPPY VALENTINE’S DAY</div>
-<div class="big">I LOVE YOU</div>
+<div class="big1">I KNEW IT ❤️🥳</div>
+<div class="big2">HAPPY VALENTINE'S DAY 💐💞</div>
+<div class="big3">I LOVE YOU 😘❤️‍🔥</div>
 </div>
 
 <script>
-/* Floating hearts */
+/* Hearts */
 const hearts=document.getElementById("hearts");
-for(let i=0;i<40;i++){
+for(let i=0;i<45;i++){
  let h=document.createElement("div");
  h.className="heart";
  h.style.left=Math.random()*100+"vw";
@@ -180,48 +203,25 @@ const openBtn=document.getElementById("openBtn");
 const yesBtn=document.getElementById("yesBtn");
 const noBtn=document.getElementById("noBtn");
 const noArea=document.getElementById("noArea");
-const noMsg=document.getElementById("noMsg");
 const final=document.getElementById("final");
-const music=document.getElementById("bgMusic");
+const wrap=document.getElementById("wrap");
 
-/* Play sound */
-function playSound(){
-  try{
-    music.currentTime=0;
-    music.play();
-  }catch(e){}
-}
-
-/* Open card */
+/* Open */
 openBtn.onclick=()=>card.classList.add("open");
 
-/* NO button movement */
-const msgs=[
-"Think again 😏",
-"Are you sure?",
-"Wrong button 😄",
-"Say YES ❤️",
-"Try again 😜"
-];
-let count=0;
-
+/* NO RUN */
 function move(){
  let rect=noArea.getBoundingClientRect();
  let x=Math.random()*(rect.width-60);
  let y=Math.random()*(rect.height-30);
  noBtn.style.transform=`translate(${x}px,${y}px)`;
- noMsg.textContent=msgs[count%msgs.length];
- noMsg.classList.add("show");
- count++;
- playSound();
 }
-
 noBtn.onclick=e=>{e.preventDefault();move();}
 noBtn.onmouseenter=move;
 
-/* YES */
+/* YES FINAL */
 yesBtn.onclick=()=>{
- playSound();
+ wrap.style.display="none";
  final.style.display="flex";
 };
 </script>

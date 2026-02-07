@@ -3,19 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine Card</title>
+<title>Valentine</title>
 
 <style>
-
-/* ===== BACKGROUND THEME ===== */
 body{
 margin:0;
-font-family: 'Georgia', serif;
-background: linear-gradient(180deg,#ffd6e7,#fff0f6);
-color:#5a4a4a;
+font-family:Georgia,serif;
+background:#ffe6f0;
 }
 
-/* ===== FIRST CARD ===== */
+/* CENTER CARD */
 .container{
 height:100vh;
 display:flex;
@@ -24,182 +21,84 @@ justify-content:center;
 }
 
 .card{
-background:#ffffffcc;
+background:white;
 padding:40px;
-border-radius:24px;
-box-shadow:0 25px 50px rgba(255,120,160,.25);
+border-radius:20px;
+box-shadow:0 20px 40px rgba(255,100,150,.3);
 text-align:center;
-max-width:340px;
-backdrop-filter: blur(8px);
-}
-
-.card h1{
-color:#d94c86;
-font-size:28px;
 }
 
 button{
 padding:12px 20px;
 border:none;
-border-radius:14px;
-font-weight:700;
+border-radius:12px;
 font-size:18px;
 margin:10px;
 cursor:pointer;
-}
-
-.yes{
-background:#ff7aa8;
 color:white;
-}
-
-.no{
-background:#ff5a5a;
-color:white;
-position:relative;
-}
-
-.msg{
 font-weight:700;
-color:#d94c86;
-min-height:24px;
 }
 
-/* ===== LOVE PAGE ===== */
-.lovePage{
+.yes{background:#ff7aa8}
+.no{background:#ff4d4d}
+
+/* VIDEO SCREEN */
+.videoScreen{
 display:none;
-padding:20px;
-min-height:100vh;
-background: linear-gradient(180deg,#ffe4ef,#ffffff);
+position:fixed;
+inset:0;
+background:black;
+align-items:center;
+justify-content:center;
 }
 
-/* HEADINGS */
-.mainTitle{
-text-align:center;
-font-size:40px;
-color:#d94c86;
-margin-top:20px;
-font-family:cursive;
+video{
+width:100%;
+height:100%;
+object-fit:contain;
 }
-
-.subTitle{
-text-align:center;
-font-size:26px;
-color:#ff7aa8;
-margin-bottom:30px;
-}
-
-/* ===== SOFT CARDS ===== */
-.section{
-background:#fff0f6;
-margin:18px auto;
-padding:20px;
-border-radius:18px;
-max-width:620px;
-box-shadow:0 10px 25px rgba(255,150,190,.2);
-border-left:6px solid #ff7aa8;
-}
-
-.section h3{
-color:#d94c86;
-margin-bottom:8px;
-font-size:20px;
-}
-
-.section p{
-line-height:1.6;
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- START SCREEN -->
-<div class="container" id="start">
+<!-- CARD -->
+<div class="container" id="cardScreen">
 <div class="card">
+<h2>Will you be my Valentine? 💖</h2>
 
-<h1>Will you be my Valentine? 💖</h1>
-
-<button class="yes" id="yesBtn">YES 😍</button>
-<button class="no" id="noBtn">NO 😜</button>
-
-<div class="msg" id="msg"></div>
+<button class="yes" onclick="playYes()">YES 😍</button>
+<button class="no" onclick="playNo()">NO 😜</button>
 
 </div>
 </div>
 
-
-<!-- LOVE PAGE -->
-<div class="lovePage" id="lovePage">
-
-<div class="mainTitle">💖 HAPPY VALENTINE’S DAY 💖</div>
-<div class="subTitle">Things I Love About You</div>
-
-<div class="section">
-<h3>⭐ Your Smile</h3>
-<p>Your smile lights up my entire world. It turns ordinary days into beautiful moments and brings warmth wherever you go.</p>
+<!-- VIDEO AREA -->
+<div class="videoScreen" id="videoScreen">
+<video id="player" controls autoplay playsinline></video>
 </div>
-
-<div class="section">
-<h3>💞 Your Kindness</h3>
-<p>The way you care for others shows the beauty of your soul. Your kindness inspires me and makes everything feel brighter.</p>
-</div>
-
-<div class="section">
-<h3>✨ Your Laughter</h3>
-<p>Your laughter fills my heart with happiness. It’s my favorite sound and makes life feel joyful and complete.</p>
-</div>
-
-<div class="section">
-<h3>🌟 Your Strength</h3>
-<p>Your strength and determination amaze me. You face challenges with courage and grace that I deeply admire.</p>
-</div>
-
-<div class="section">
-<h3>🎀 Your Heart</h3>
-<p>Your love and sincerity make me feel incredibly lucky. Your heart is pure, caring, and endlessly beautiful.</p>
-</div>
-
-<div class="section">
-<h3>🎯 Your Dreams</h3>
-<p>Watching you chase your dreams motivates me every day. Your passion and ambition are truly inspiring.</p>
-</div>
-
-</div>
-
 
 <script>
 
-/* NO BUTTON BEHAVIOR */
-const noBtn=document.getElementById("noBtn");
-const msg=document.getElementById("msg");
+function showVideo(src){
+document.getElementById("cardScreen").style.display="none";
+const screen=document.getElementById("videoScreen");
+const player=document.getElementById("player");
 
-const texts=[
-"One more chance 😏",
-"Think again 😉",
-"Are you sure? 😜",
-"Don't break my heart 💔",
-"Try YES 😍"
-];
-
-let i=0;
-
-function move(){
-noBtn.style.left=Math.random()*140-70+"px";
-noBtn.style.top=Math.random()*90-45+"px";
-msg.textContent=texts[i%texts.length];
-i++;
+screen.style.display="flex";
+player.src=src;
+player.play();
 }
 
-noBtn.onclick=e=>{e.preventDefault();move();}
-noBtn.onmouseenter=move;
+/* YES -> CB VIDEO */
+function playYes(){
+showVideo("gemini_generated_video_136E69CB.mov");
+}
 
-/* YES CLICK */
-document.getElementById("yesBtn").onclick=()=>{
-document.getElementById("start").style.display="none";
-document.getElementById("lovePage").style.display="block";
-};
+/* NO -> C7 VIDEO */
+function playNo(){
+showVideo("gemini_generated_video_731D66C7 2.mov");
+}
 
 </script>
 

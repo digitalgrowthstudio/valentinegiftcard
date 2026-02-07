@@ -6,13 +6,15 @@
 <title>Valentine</title>
 
 <style>
+
+/* ===== PAGE BACKGROUND ===== */
 body{
 margin:0;
-font-family:Georgia,serif;
-background:#ffe6f0;
+font-family: Georgia, serif;
+background: linear-gradient(180deg,#ffd6e7,#fff0f6);
 }
 
-/* CENTER CARD */
+/* ===== CENTER CARD ===== */
 .container{
 height:100vh;
 display:flex;
@@ -23,15 +25,23 @@ justify-content:center;
 .card{
 background:white;
 padding:40px;
-border-radius:20px;
-box-shadow:0 20px 40px rgba(255,100,150,.3);
+border-radius:24px;
+box-shadow:0 25px 50px rgba(255,120,160,.25);
 text-align:center;
+max-width:340px;
 }
 
+.card h2{
+color:#d94c86;
+font-size:26px;
+margin-bottom:20px;
+}
+
+/* BUTTONS */
 button{
-padding:12px 20px;
+padding:14px 22px;
 border:none;
-border-radius:12px;
+border-radius:14px;
 font-size:18px;
 margin:10px;
 cursor:pointer;
@@ -39,10 +49,10 @@ color:white;
 font-weight:700;
 }
 
-.yes{background:#ff7aa8}
-.no{background:#ff4d4d}
+.yes{background:#ff7aa8;}
+.no{background:#ff4d4d;}
 
-/* VIDEO SCREEN */
+/* ===== VIDEO SCREEN ===== */
 .videoScreen{
 display:none;
 position:fixed;
@@ -50,6 +60,7 @@ inset:0;
 background:black;
 align-items:center;
 justify-content:center;
+z-index:999;
 }
 
 video{
@@ -57,6 +68,7 @@ width:100%;
 height:100%;
 object-fit:contain;
 }
+
 </style>
 </head>
 
@@ -64,40 +76,43 @@ object-fit:contain;
 
 <!-- CARD -->
 <div class="container" id="cardScreen">
-<div class="card">
-<h2>Will you be my Valentine? 💖</h2>
+  <div class="card">
+    <h2>Will you be my Valentine? 💖</h2>
 
-<button class="yes" onclick="playYes()">YES 😍</button>
-<button class="no" onclick="playNo()">NO 😜</button>
+    <button class="yes" onclick="playYes()">YES 😍</button>
+    <button class="no" onclick="playNo()">NO 😜</button>
 
+  </div>
 </div>
-</div>
 
-<!-- VIDEO AREA -->
+<!-- VIDEO PLAYER -->
 <div class="videoScreen" id="videoScreen">
-<video id="player" controls autoplay playsinline></video>
+  <video id="player" controls autoplay playsinline></video>
 </div>
 
 <script>
 
+/* SHOW VIDEO FUNCTION */
 function showVideo(src){
-document.getElementById("cardScreen").style.display="none";
-const screen=document.getElementById("videoScreen");
-const player=document.getElementById("player");
+  document.getElementById("cardScreen").style.display="none";
 
-screen.style.display="flex";
-player.src=src;
-player.play();
+  const screen=document.getElementById("videoScreen");
+  const player=document.getElementById("player");
+
+  screen.style.display="flex";
+  player.src=src;
+  player.load();
+  player.play();
 }
 
-/* YES -> CB VIDEO */
+/* YES → CB VIDEO */
 function playYes(){
-showVideo("gemini_generated_video_136E69CB.mov");
+  showVideo("gemini_generated_video_136E69CB.mp4");
 }
 
-/* NO -> C7 VIDEO */
+/* NO → C7 VIDEO */
 function playNo(){
-showVideo("gemini_generated_video_731D66C7 2.mov");
+  showVideo("gemini_generated_video_731D66C7.mp4");
 }
 
 </script>

@@ -16,11 +16,12 @@ overflow:hidden;
 perspective:1200px;
 }
 
-/* ===== FLOATING 3D HEARTS ===== */
+/* ===== FLOATING HEARTS (3D SCREENS ONLY) ===== */
 .hearts{
 position:fixed;
 inset:0;
 pointer-events:none;
+z-index:0;
 }
 .heart{
 position:absolute;
@@ -28,19 +29,22 @@ font-size:20px;
 animation:float linear infinite;
 opacity:.7;
 }
-
 @keyframes float{
 from{transform:translateY(110vh) rotateY(0deg)}
 to{transform:translateY(-20vh) rotateY(360deg)}
 }
 
-/* ===== SCREENS ===== */
+/* ===== SCREEN WRAPPER ===== */
 .screen{
 height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
-transition:.6s;
+position:absolute;
+width:100%;
+top:0;
+left:0;
+z-index:1;
 }
 
 /* ===== 3D CARD ===== */
@@ -61,7 +65,7 @@ transition:.6s;
 transform:rotateY(12deg) rotateX(6deg) scale(1.03);
 }
 
-/* FLIP EFFECT */
+/* OPEN FLIP */
 .flip{
 transform:rotateY(180deg) scale(.8);
 opacity:0;
@@ -85,7 +89,6 @@ font-weight:700;
 box-shadow:0 8px 18px rgba(0,0,0,.2);
 transition:.3s;
 }
-
 button:hover{
 transform:translateY(-4px) scale(1.08);
 }
@@ -94,20 +97,25 @@ transform:translateY(-4px) scale(1.08);
 .yes{background:linear-gradient(45deg,#ff7aa8,#ff3d7c);}
 .no{background:linear-gradient(45deg,#ff5a5a,#d10000);}
 
-/* ===== VIDEO ===== */
+/* ===== VIDEO SCREEN (NO 3D EFFECTS HERE) ===== */
 .videoScreen{
 display:none;
 position:fixed;
-inset:0;
+top:0;
+left:0;
+width:100vw;
+height:100vh;
 background:black;
 align-items:center;
 justify-content:center;
-z-index:999;
+z-index:99999;
 }
+
 video{
-width:100%;
-height:100%;
+width:100vw;
+height:100vh;
 object-fit:contain;
+background:black;
 }
 
 </style>
@@ -115,6 +123,7 @@ object-fit:contain;
 
 <body>
 
+<!-- HEARTS -->
 <div class="hearts" id="hearts"></div>
 
 <!-- SCREEN 1 -->
@@ -142,19 +151,19 @@ object-fit:contain;
 
 <script>
 
-/* HEART GENERATOR */
+/* HEARTS */
 const hearts=document.getElementById("hearts");
-const emojis=["❤️","💖","💗","💘","💝"];
+const icons=["❤️","💖","💘","💗","💝"];
 for(let i=0;i<35;i++){
 let h=document.createElement("div");
 h.className="heart";
-h.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+h.innerText=icons[Math.floor(Math.random()*icons.length)];
 h.style.left=Math.random()*100+"vw";
 h.style.animationDuration=(5+Math.random()*5)+"s";
 hearts.appendChild(h);
 }
 
-/* 3D OPEN TRANSITION */
+/* OPEN TRANSITION */
 function openGift(){
 const card=document.getElementById("giftCard");
 card.classList.add("flip");
@@ -168,6 +177,7 @@ document.getElementById("questionScreen").style.display="flex";
 /* VIDEO PLAY */
 function showVideo(src){
 document.getElementById("questionScreen").style.display="none";
+
 const screen=document.getElementById("videoScreen");
 const player=document.getElementById("player");
 
@@ -177,10 +187,12 @@ player.load();
 player.play();
 }
 
+/* YES VIDEO */
 function playYes(){
 showVideo("gemini_generated_video_136E69CB.mp4");
 }
 
+/* NO VIDEO */
 function playNo(){
 showVideo("gemini_generated_video_731D66C7.mp4");
 }
